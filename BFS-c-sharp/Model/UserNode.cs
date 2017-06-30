@@ -23,7 +23,7 @@ namespace BFS_c_sharp.Model
             LastName = lastName;
         }
 
-        public void AddFriend(ref UserNode friend)
+        public void AddFriend(UserNode friend)
         {
             Friends.Add(friend);
             friend.Friends.Add(this);
@@ -31,7 +31,7 @@ namespace BFS_c_sharp.Model
 
         public override string ToString()
         {
-            return FirstName + " " + LastName;
+            return FirstName + " " + LastName + "(" + Friends.Count + ")";
         }
     }
 }

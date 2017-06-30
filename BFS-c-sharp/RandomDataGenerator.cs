@@ -31,7 +31,7 @@ namespace BFS_c_sharp
                 if (i % 5 == 0)
                 {
                     var friendUser = users[i + 30];
-                    users[i].AddFriend(ref friendUser);
+                    users[i].AddFriend(friendUser);
                 }
             }
 
@@ -44,10 +44,10 @@ namespace BFS_c_sharp
             {
                 return;
             }
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < depth; i++)
             {
                 UserNode newUser = GenerateNewUser();
-                user.AddFriend(ref newUser);
+                user.AddFriend(newUser);
                 allUsers.Add(newUser);
                 GenerateTree(newUser, allUsers, depth - 1);
             }
