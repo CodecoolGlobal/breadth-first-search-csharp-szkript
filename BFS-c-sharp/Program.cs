@@ -48,7 +48,7 @@ namespace BFS_c_sharp
                 visited.Add(actualVisit);
             }
             Console.WriteLine($"test count: {testCount}");
-            return 0;
+            return visited.Count;
         }
     }
 }
