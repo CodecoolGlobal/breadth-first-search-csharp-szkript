@@ -17,13 +17,14 @@ namespace BFS_c_sharp
             {
                 //Console.WriteLine(user);
             }
+            
 
             Console.WriteLine(res);
             Console.WriteLine("Done");
             Console.ReadKey();
         }
 
-        public void FriendsOfFriendsDistance(UserNode user)
+        public static void FriendsOfFriendsDistance(UserNode user)
         {
 
         }
@@ -49,6 +50,11 @@ namespace BFS_c_sharp
             }
             Console.WriteLine($"test count: {testCount}");
             return visited.Count;
+        }
+
+        public static void ShortestDistance()
+        {
+
         }
     }
 }
