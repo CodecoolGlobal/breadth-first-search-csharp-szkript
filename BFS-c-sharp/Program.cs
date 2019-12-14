@@ -35,7 +35,11 @@ namespace BFS_c_sharp
                 int depth = 0;
                 foreach(UserNode friend in user.Friends)
                 {
-
+                    if(depth == 0)
+                    {
+                        queue.Enqueue(friend);
+                    }
+                    depth++;
                 }
             }
         }
