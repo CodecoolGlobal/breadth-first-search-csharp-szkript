@@ -28,6 +28,7 @@ namespace BFS_c_sharp
             Console.WriteLine($"user info -> {user.FirstName} {user.LastName} (friends: {user.Friends.Count})");
             Queue queue = new Queue();
             List<int> depthDistance = new List<int>();
+            HashSet<int> userMap = new HashSet<int>();
             for(int i=0; i <= user.Friends.Count; i++)
             {
                 int depth = 0;
