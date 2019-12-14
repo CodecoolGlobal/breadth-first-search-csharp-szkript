@@ -26,7 +26,7 @@ namespace BFS_c_sharp
         public static void FriendsOfFriendsDistance(UserNode user)
         {
             Console.WriteLine($"user info -> {user.FirstName} {user.LastName} (friends: {user.Friends.Count})");
-            
+
         }
 
         public static int MinDistance(UserNode user, UserNode user2)
