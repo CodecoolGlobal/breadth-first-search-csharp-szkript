@@ -39,13 +39,17 @@ namespace BFS_c_sharp
             {
                 UserNode actualVisit = (UserNode)que.Dequeue();
                 if (visited.Contains(actualVisit)) { continue; }
-                Console.WriteLine($"Runtime -> Actual : {actualVisit.FirstName} {actualVisit.LastName} ");
+                Console.WriteLine($"Runtime -> Actual : {actualVisit.FirstName} {actualVisit.LastName} (friends: {actualVisit.Friends.Count} )");
                 foreach(UserNode neighbor in actualVisit.Friends)
                 {
                     
                     testCount++;
                     que.Enqueue(neighbor);
                     Console.WriteLine($"Runtime -> test count: {testCount}, {neighbor.FirstName} {neighbor.LastName} (friends: {neighbor.Friends.Count} )");
+                    if(neighbor == user2)
+                    {
+                        Console.WriteLine("MEGVAGY GECI");
+                    }
 
                 }
                 visited.Add(actualVisit);
