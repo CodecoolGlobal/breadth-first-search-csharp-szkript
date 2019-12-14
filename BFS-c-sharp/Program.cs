@@ -12,51 +12,37 @@ namespace BFS_c_sharp
             RandomDataGenerator generator = new RandomDataGenerator();
             List<UserNode> users = generator.Generate();
             Console.WriteLine($"users: {users.Count}");
-            int res = MinDistance(users[0], users[2]);
+            //int res = MinDistance(users[0], users[2]);
+            FriendsOfFriendsDistance(users[0]);
             foreach (var user in users)
             {
                 //Console.WriteLine(user);
             }
             
 
-            Console.WriteLine(res);
+            //Console.WriteLine(res);
             Console.WriteLine("Done");
             Console.ReadKey();
         }
 
         public static void FriendsOfFriendsDistance(UserNode user)
         {
+            Console.WriteLine($"user info -> {user.FirstName} {user.LastName} (friends: {user.Friends.Count})");
+            Queue queue = new Queue();
+            List<int> depthDistance = new List<int>();
+            for(int i=0; i <= user.Friends.Count; i++)
+            {
+                int depth = 0;
+                foreach(UserNode friend in user.Friends)
+                {
 
+                }
+            }
         }
 
         public static int MinDistance(UserNode user, UserNode user2)
         {
-            int testCount = 0;
-            Queue que = new Queue();
-            que.Enqueue(user);
-            List<UserNode> visited = new List<UserNode>();
-            while(que.Count > 0)
-            {
-                UserNode actualVisit = (UserNode)que.Dequeue();
-                if (visited.Contains(actualVisit)) { continue; }
-                Console.WriteLine($"Runtime -> Actual : {actualVisit.FirstName} {actualVisit.LastName} (friends: {actualVisit.Friends.Count} )");
-                foreach(UserNode neighbor in actualVisit.Friends)
-                {
-                    
-                    testCount++;
-                    que.Enqueue(neighbor);
-                    Console.WriteLine($"Runtime -> test count: {testCount}, {neighbor.FirstName} {neighbor.LastName} (friends: {neighbor.Friends.Count} )");
-                    if(neighbor == user2)
-                    {
-                        Console.WriteLine("MEGVAGY GECI");
-                    }
-
-                }
-                visited.Add(actualVisit);
-                Console.WriteLine();
-            }
-            Console.WriteLine($"test count: {testCount}");
-            return visited.Count;
+            return 0;
         }
 
         public static void ShortestDistance()
