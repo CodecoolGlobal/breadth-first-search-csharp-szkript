@@ -18,8 +18,6 @@ namespace BFS_c_sharp
             {
                 //Console.WriteLine(user);
             }
-            
-
             //Console.WriteLine(res);
             Console.WriteLine("Done");
             Console.ReadKey();
@@ -35,12 +33,19 @@ namespace BFS_c_sharp
                 int depth = 0;
                 foreach(UserNode friend in user.Friends)
                 {
+                    Console.WriteLine($"|depth: {depth} -> {friend.FirstName} {friend.LastName} (friends: {friend.Friends.Count})");
                     if(depth == 0)
                     {
                         queue.Enqueue(friend);
                     }
                     depth++;
+                    Console.WriteLine("->");
+                    foreach(UserNode friendOfFriend in friend.Friends)
+                    {
+                        Console.WriteLine($"-> |depth: {depth} -> {friendOfFriend.FirstName} {friendOfFriend.LastName} (friends: {friendOfFriend.Friends.Count})");
+                    }
                 }
+                depthDistance.Add(depth);
             }
         }
 
