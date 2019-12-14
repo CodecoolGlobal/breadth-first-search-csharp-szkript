@@ -35,6 +35,7 @@ namespace BFS_c_sharp
             Queue que = new Queue();
             que.Enqueue(user);
             List<UserNode> visited = new List<UserNode>();
+            HashSet<int> userMap = new HashSet<int>();
             while(que.Count > 0)
             {
                 UserNode actualVisit = (UserNode)que.Dequeue();
@@ -42,7 +43,6 @@ namespace BFS_c_sharp
                 Console.WriteLine($"Runtime -> Actual : {actualVisit.FirstName} {actualVisit.LastName} (friends: {actualVisit.Friends.Count} )");
                 foreach(UserNode neighbor in actualVisit.Friends)
                 {
-                    
                     testCount++;
                     que.Enqueue(neighbor);
                     Console.WriteLine($"Runtime -> test count: {testCount}, {neighbor.FirstName} {neighbor.LastName} (friends: {neighbor.Friends.Count} )");
