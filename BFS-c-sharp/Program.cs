@@ -12,11 +12,10 @@ namespace BFS_c_sharp
             RandomDataGenerator generator = new RandomDataGenerator();
             List<UserNode> users = generator.Generate();
             Console.WriteLine($"users: {users.Count}");
-            ExtractChilds(users[0]);
             //int res = MinDistance(users[0], users[2]);
             foreach (var user in users)
             {
-                //Console.WriteLine(user);
+                ExtractChilds(user);
             }
 
 
@@ -64,32 +63,50 @@ namespace BFS_c_sharp
         {
 
         }
-        public static Queue ExtractChilds(UserNode user)
+        public static LinkedList<UserNode> ExtractChilds(UserNode user)
         {
-            Queue result = new Queue();
+            Console.WriteLine($"Parent : {user.FirstName} {user.LastName} {user.Friends.Count}");
+            Queue nodeQue = new Queue();
             LinkedList<UserNode> friendOrder = new LinkedList<UserNode>();
+            List<UserNode> visited = new List<UserNode>();
             friendOrder.AddFirst(user);
             int kamucounter = 0;
-            result.Enqueue(user);
+            nodeQue.Enqueue(user);
 
-            while (result.Count > 0)
+            while (nodeQue.Count > 0)
             {
-                foreach (UserNode friend in user.Friends)
+                UserNode actual = (UserNode)nodeQue.Dequeue();
+                foreach (UserNode friend in actual.Friends)
                 {
-                    if (kamucounter == 1)
+                    if (friendOrder.Contains(friend))
+                    {
+                        continue;
+                    }
+                    if (kamucounter == 0 && !visited.Contains(friend))
+                    {
+                        friendOrder.AddLast(friend);
+                        nodeQue.Enqueue(friend);
+                        visited.Add(friend);
+                        kamucounter = 0;
+                        break;
+                    }
+                    if (visited.Contains(friend))
                     {
                         kamucounter = 0;
                         break;
                     }
-                    friendOrder.AddLast(friend);
-                    result.Enqueue(friend);
                     kamucounter++;
                 }
 
             }
-            Console.WriteLine(friendOrder);
+            foreach(var node in friendOrder)
+            {
+                Console.WriteLine(node);
 
-            return result;
+            }
+            Console.WriteLine();
+
+            return friendOrder;
         }
     }
 }
