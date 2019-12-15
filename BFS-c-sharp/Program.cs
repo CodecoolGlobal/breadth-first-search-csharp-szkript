@@ -13,9 +13,10 @@ namespace BFS_c_sharp
             List<UserNode> users = generator.Generate();
             Console.WriteLine($"users: {users.Count}");
             //int res = MinDistance(users[0], users[2]);
-            foreach (var user in users)
+            foreach(var user in users)
             {
-                ExtractChilds(user);
+                ExtractAllPath(user);
+                Console.WriteLine();
             }
 
 
@@ -65,17 +66,21 @@ namespace BFS_c_sharp
         }
         public static LinkedList<UserNode> ExtractChilds(UserNode user)
         {
-            Console.WriteLine($"Parent : {user.FirstName} {user.LastName} {user.Friends.Count}");
+            Console.WriteLine($"Child : {user.FirstName} {user.LastName} {user.Friends.Count}");
             Queue nodeQue = new Queue();
             LinkedList<UserNode> friendOrder = new LinkedList<UserNode>();
             List<UserNode> visited = new List<UserNode>();
-            friendOrder.AddFirst(user);
             int kamucounter = 0;
             nodeQue.Enqueue(user);
 
             while (nodeQue.Count > 0)
             {
                 UserNode actual = (UserNode)nodeQue.Dequeue();
+                if (!friendOrder.Contains(actual))
+                {
+                    friendOrder.AddFirst(actual);
+                }
+
                 foreach (UserNode friend in actual.Friends)
                 {
                     if (friendOrder.Contains(friend))
@@ -99,14 +104,17 @@ namespace BFS_c_sharp
                 }
 
             }
-            foreach(var node in friendOrder)
-            {
-                Console.WriteLine(node);
-
-            }
-            Console.WriteLine();
 
             return friendOrder;
+        }
+        public static Queue ExtractAllPath(UserNode user)
+        {
+            Queue result = new Queue();
+            Console.WriteLine($"Parent : {user.FirstName} {user.LastName} ({user.Friends.Count})");
+            foreach (UserNode node in user.Friends)
+                result.Enqueue(ExtractChilds(node));
+
+            return result;
         }
     }
 }
