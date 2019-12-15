@@ -18,6 +18,7 @@ namespace BFS_c_sharp
                 ExtractAllPath(user);
                 Console.WriteLine();
             }
+            FriendsOfFriendsDistance(users[0]);
 
 
             //Console.WriteLine(res);
@@ -27,6 +28,8 @@ namespace BFS_c_sharp
 
         public static void FriendsOfFriendsDistance(UserNode user)
         {
+             
+            Console.WriteLine(user.FirstName + " " + user.LastName + " Friend of friends: " + ExtractChilds(user).Count);
 
         }
 
