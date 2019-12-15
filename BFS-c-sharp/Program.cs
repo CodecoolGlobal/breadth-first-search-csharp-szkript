@@ -12,12 +12,18 @@ namespace BFS_c_sharp
             RandomDataGenerator generator = new RandomDataGenerator();
             List<UserNode> users = generator.Generate();
             Console.WriteLine($"users: {users.Count}");
-            //int res = MinDistance(users[0], users[2]);
-            foreach(var user in users)
+
+            foreach (var user in users)
             {
-                ExtractAllPath(user);
-                Console.WriteLine();
+                var process = ExtractAllPath(user);
+                List<UserNode> friendsAtDistance = FriendOfFriendsAtGivenDistance(process, 4);
+                foreach (var f in friendsAtDistance)
+                {
+                    Console.WriteLine(f);
+
+                }
             }
+            Console.WriteLine("minimum distance : " + MinDistance(users[0], users[2]));
             FriendsOfFriendsDistance(users[0]);
 
 
@@ -29,59 +35,71 @@ namespace BFS_c_sharp
         public static void FriendsOfFriendsDistance(UserNode user)
         {
              
-            Console.WriteLine(user.FirstName + " " + user.LastName + " Friend of friends: " + ExtractChilds(user).Count);
+            //Console.WriteLine(user.FirstName + " " + user.LastName + " Friend of friends: " + ExtractChilds(user).Count);
 
+        }
+
+        public static List<UserNode> FriendOfFriendsAtGivenDistance(Queue user, int distance)
+        {
+            List<UserNode> friends = new List<UserNode>();
+            foreach(var path in user)
+            {
+                 
+            }
+
+            return friends;
         }
 
         public static int MinDistance(UserNode user, UserNode user2)
         {
-            int testCount = 0;
             Queue que = new Queue();
             que.Enqueue(user);
             List<UserNode> visited = new List<UserNode>();
             HashSet<int> userMap = new HashSet<int>();
+            int minDistance = 111110;
             while (que.Count > 0)
             {
                 UserNode actualVisit = (UserNode)que.Dequeue();
                 if (visited.Contains(actualVisit)) { continue; }
-                Console.WriteLine($"Runtime -> Actual : {actualVisit.FirstName} {actualVisit.LastName} (friends: {actualVisit.Friends.Count} )");
+                //Console.WriteLine($"Runtime -> Actual : {actualVisit.FirstName} {actualVisit.LastName} (friends: {actualVisit.Friends.Count} )");
                 foreach (UserNode neighbor in actualVisit.Friends)
                 {
-                    testCount++;
                     que.Enqueue(neighbor);
-                    Console.WriteLine($"Runtime -> test count: {testCount}, {neighbor.FirstName} {neighbor.LastName} (friends: {neighbor.Friends.Count} )");
+                    //Console.WriteLine($"Runtime -> test count: {neighbor.FirstName} {neighbor.LastName} (friends: {neighbor.Friends.Count} )");
                     if (neighbor == user2)
                     {
-                        Console.WriteLine("MEGVAGY GECI");
+                        if (que.Count < minDistance)
+                        {
+                            minDistance = que.Count;
+
+                        }
+                        Console.WriteLine($"MEGVAGY {que.Count}");
                     }
 
                 }
                 visited.Add(actualVisit);
-                Console.WriteLine();
             }
-            Console.WriteLine($"test count: {testCount}");
-            return visited.Count;
+            return minDistance;
         }
 
         public static void ShortestDistance()
         {
 
         }
-        public static LinkedList<UserNode> ExtractChilds(UserNode user)
+        public static LinkedList<UserNode> ExtractChilds(UserNode user, UserNode parent)
         {
-            Console.WriteLine($"Child : {user.FirstName} {user.LastName} {user.Friends.Count}");
+            //Console.WriteLine($"Child : {user.FirstName} {user.LastName} {user.Friends.Count}");
             Queue nodeQue = new Queue();
             LinkedList<UserNode> friendOrder = new LinkedList<UserNode>();
             List<UserNode> visited = new List<UserNode>();
-            int kamucounter = 0;
             nodeQue.Enqueue(user);
 
             while (nodeQue.Count > 0)
             {
                 UserNode actual = (UserNode)nodeQue.Dequeue();
-                if (!friendOrder.Contains(actual))
+                if (!friendOrder.Contains(parent))
                 {
-                    friendOrder.AddFirst(actual);
+                    friendOrder.AddFirst(parent);
                 }
 
                 foreach (UserNode friend in actual.Friends)
@@ -90,20 +108,17 @@ namespace BFS_c_sharp
                     {
                         continue;
                     }
-                    if (kamucounter == 0 && !visited.Contains(friend))
+                    if (!visited.Contains(friend))
                     {
                         friendOrder.AddLast(friend);
                         nodeQue.Enqueue(friend);
                         visited.Add(friend);
-                        kamucounter = 0;
                         break;
                     }
                     if (visited.Contains(friend))
                     {
-                        kamucounter = 0;
                         break;
                     }
-                    kamucounter++;
                 }
 
             }
@@ -113,9 +128,9 @@ namespace BFS_c_sharp
         public static Queue ExtractAllPath(UserNode user)
         {
             Queue result = new Queue();
-            Console.WriteLine($"Parent : {user.FirstName} {user.LastName} ({user.Friends.Count})");
+            //Console.WriteLine($"Parent : {user.FirstName} {user.LastName} ({user.Friends.Count})");
             foreach (UserNode node in user.Friends)
-                result.Enqueue(ExtractChilds(node));
+                result.Enqueue(ExtractChilds(node, user));
 
             return result;
         }
