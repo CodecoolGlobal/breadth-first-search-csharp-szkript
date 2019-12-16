@@ -16,7 +16,7 @@ namespace BFS_c_sharp
             foreach (var user in users)
             {
                 var process = ExtractAllPath(user);
-                List<UserNode> friendsAtDistance = FriendOfFriendsAtGivenDistance(process, 4);
+                List<UserNode> friendsAtDistance = FriendOfFriendsAtGivenDistance(user, 4);
                 foreach (var f in friendsAtDistance)
                 {
                     Console.WriteLine(f);
@@ -34,19 +34,34 @@ namespace BFS_c_sharp
 
         public static void FriendsOfFriendsDistance(UserNode user)
         {
-             
+
             //Console.WriteLine(user.FirstName + " " + user.LastName + " Friend of friends: " + ExtractChilds(user).Count);
 
         }
 
-        public static List<UserNode> FriendOfFriendsAtGivenDistance(Queue user, int distance)
+        public static List<UserNode> FriendOfFriendsAtGivenDistance(UserNode user, int distance)
         {
             List<UserNode> friends = new List<UserNode>();
-            foreach(var path in user)
+            Queue que = new Queue();
+            que.Enqueue(user);
+            List<UserNode> visited = new List<UserNode>();
+            while (que.Count > 0)
             {
-                 
+                UserNode actualVisit = (UserNode)que.Dequeue();
+                if (visited.Contains(actualVisit)) { continue; }
+                foreach (UserNode neighbor in actualVisit.Friends)
+                {
+                    que.Enqueue(neighbor);
+                }
+                visited.Add(actualVisit);
+                if (que.Count <= distance)
+                {
+                    if (!friends.Contains(actualVisit))
+                    {
+                        friends.Add(actualVisit);
+                    }
+                }
             }
-
             return friends;
         }
 
@@ -55,7 +70,6 @@ namespace BFS_c_sharp
             Queue que = new Queue();
             que.Enqueue(user);
             List<UserNode> visited = new List<UserNode>();
-            HashSet<int> userMap = new HashSet<int>();
             int minDistance = 111110;
             while (que.Count > 0)
             {
